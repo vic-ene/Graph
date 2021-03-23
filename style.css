@@ -1,0 +1,72 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+#container{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#canvas{
+    height: 100%;
+    width: 80vw;
+
+}
+
+
+
+.border{
+  height: 100%;
+  width: 10vw;
+
+ 
+  justify-content: center;
+  background-color: wheat;
+}
+
+
+button{
+
+    box-shadow: none;
+    outline: none;
+    border: none;  
+}
+button:hover{
+    background-color: lightpink;
+}
+
+button.active{
+    background-color:lightcoral;
+}
+button.active:hover{
+    background-color: khaki;
+}
+
+
+.border button{
+    width: 100%;
+    height: 10vh;
+    padding: 20px;
+    font-size: 1rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
