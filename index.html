@@ -12,11 +12,32 @@
 
   <div id ="container">
     <div class="border-left border">
-      <button id="calculateButton">Calculate</button>
+      <button id="calculateButton"><h4>Calculate</h4></button>
+      <div class="button">
+         <h4 id="speedSliderText">Speed: </h4>
+         <input type="range" min="0" max="7" step="1" id="speedSlider">
+      </div>
+      <div class="button">
+        <h4 id="NodeNumberSliderText">Nodes: </h4>
+        <input type="range" min="0" max="20" step="1" id="nodeNumberSlider">
+      </div>
+      <div class="button">
+        <h4>Stroke</h4>
+        <input id="strokeColorInput" type="color" >
+      </div>
+       <div class="button">
+          <h4>Node</h4>
+          <input id="nodeColorInput" type="color" >
+       </div>
+       <div class="button">
+          <h4>Background</h4>
+          <input id="backgroundColorInput" type="color" >
+       </div>  
     </div>
-    <div id = "canvas">
 
-    </div>
+
+    <div id = "canvas"></div>
+
     <div class="border-right border">
       <button id="addNodeButton">Add Node</button>
       <button id="moveNodeButton">Move Node</button>
@@ -26,9 +47,11 @@
     </div>
   </div>
  
-  <script src="sketch.js"></script>
-  <script src="node.js"></script>
-  <script src="nodebuttons.js"></script>
+  <script src="js/sketch.js"></script>
+  <script src="js/node.js"></script>
+  <script src="js/nodebuttons.js"></script>
+  <script src="js/tsp.js"></script>
+
   <script src="other/methods.js"></script>
 
   <script>
@@ -44,7 +67,15 @@
             addNodeButton = document.querySelector('#addNodeButton'),
             generateNodesButton = document.querySelector('#generateNodesButton'),
 
-            calculateButton = document.querySelector('#calculateButton');
+            calculateButton = document.querySelector('#calculateButton'),
+            speedSlider = document.querySelector('#speedSlider'), 
+            speedSliderText = document.querySelector('#speedSliderText'),
+            nodeNumberSlider = document.querySelector('#nodeNumberSlider'), 
+            nodeNumberSliderText = document.querySelector('#nodeNumberSliderText');
+            strokeColorInput = document.querySelector('#strokeColorInput');
+            nodeColorInput = document.querySelector('#nodeColorInput');
+            backgroundColorInput = document.querySelector('#backgroundColorInput');
+            
 
 
       var buttons = [];
@@ -55,38 +86,28 @@
       buttons.push(generateNodesButton);
 
       buttons.push(calculateButton);
+      strokeColorInput.value = strokeColor;
+      nodeColorInput.value = nodeColor;
+      backgroundColorInput.value = backgroundColor;
         
 
 
 
-      deleteAllButton.addEventListener('click', function(){
-       resetNodes();
-      })
-      generateNodesButton.addEventListener('click', function(){
-        nodes = generateRandomNodes(numberOfNodes);
-      })
+      // these methods are in nodesbuttons.js 
+      deleteAllButton.addEventListener('click', resetNodes)
+      generateNodesButton.addEventListener('click', generateRandomNodes)
       addNodeButton.addEventListener('click', switchButton);
       moveNodeButton.addEventListener('click', switchButton);
       deleteNodeButton.addEventListener('click', switchButton);
 
       calculateButton.addEventListener('click', calculateDistanceMatrix);
-
-
-
-
-    function isActive(element){
-      return element.classList.contains('active');
-    }
-
-    function switchButton(){
-      let cse = isActive(this);
-      for(var i = 0; i < buttons.length; i ++){
-        buttons[i].classList.remove('active');
-      }
-      if(cse == false){
-        this.classList.add('active');
-      }
-    }
+      speedSlider.addEventListener('input', changeCalculationSpeed);
+      speedSliderText.innerHTML = "Speed: " + speedSlider.value.toString();
+      nodeNumberSlider.addEventListener('input', changeNumberOfNodes);
+      nodeNumberSliderText.innerHTML = "Nodes: " + nodeNumberSlider.value.toString();
+      strokeColorInput.addEventListener('input', changeStrokeColor);
+      nodeColorInput.addEventListener('input', changeNodeColor);
+      backgroundColorInput.addEventListener('input', changeBackgroundColor);
 
     function windowResized(){
       width = canvasDiv.offsetWidth;

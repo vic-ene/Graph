@@ -1,8 +1,9 @@
 
-var numberOfNodes = 8;
-var calculationsPerRender = 1_0_0;
+var defaultNumberOfNodes = 10;
+var calculationsPerRender = 1_00_00;
 
-let nodes = [],                order = [], bestOrder = [],            distances = [], bestDistance = Infinity;
+let nodes = [],                order = [], bestOrder = [],        distances = [], bestDistance = Infinity;
+let nodeColor = "#FFFFFF",     strokeColor = "#DB7093",           backgroundColor = "#000000";
 
 mouseInsideCanvas = false;
 calculate = false;
@@ -22,14 +23,14 @@ function setup() {
   canvas.mouseOver(function(){ mouseInsideCanvas = true; });
   canvas.mouseOut(function(){ mouseInsideCanvas = false; });
 
-  nodes = generateRandomNodes(numberOfNodes);
+  generateRandomNodes();
 }
 
 
 function draw() {
     update();
 
-    background(0);
+    background(backgroundColor);
 
     // draw the nodes and the lines
     if(nodes.length > 0) {
@@ -47,8 +48,9 @@ function draw() {
     // draw the advancement
     if(calculate){
       fill(255);
-      text(nf( 100 * count / (totalPermutations  ), 1,2) + "%", width / 2, height - 20);
+      text(nf( (count * 100 * nodes.length) / (totalPermutations  ), 1,2) + "%", width / 2, height - 20);
     }
+
 }
 
 
@@ -87,12 +89,21 @@ function keyTyped(){
 }
 // -------------------------------------------------------------------------------------------
 
-
-
+function calculateDistance(){
+  let distance = 0;
+  for(var i = 0; i < order.length - 1; i ++){
+    distance += distances[order[i]][order[i + 1]];
+  }
+  distance += distances[order[order.length - 1]][order[0]];
+  if(distance < bestDistance){
+    bestDistance = distance;
+    bestOrder = order.slice();
+  }
+}
 
 
  // get the index of the hovered node 
- function findNodeIndex(){
+function findNodeIndex(){
   for(var i = 0; i < nodes.length; i ++){
    let node = nodes[i]; 
    if(node.isHovered()){
@@ -105,6 +116,7 @@ function keyTyped(){
    }
  }
 }
+
 
 // drawing effects when node buttons are active
 function nodeButtonEffects(){
@@ -127,12 +139,7 @@ function nodeButtonEffects(){
 }
 
 
-// reset the node array
-function resetNodes(){
-  nodes = [];
-  order = [];
-  bestOrder = order.slice();
-}
+
 
 
 

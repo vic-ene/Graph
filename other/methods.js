@@ -12,4 +12,12 @@ function swap(a, i, j) {
       return n * factorial(n - 1);
     }
   }
+
+  function randomColor(){
+    let r = int(random(255));
+    let g = int(random(255));
+    let b = int(random(255));
+    let color = "rgb(" + r.toString() + "," + g.toString() + "," + b.toString() + ")";
+    return color;
+  }
   

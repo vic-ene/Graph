@@ -18,8 +18,8 @@ class Node{
         this.showMove = false;
         this.move = false;
 
-        this.strokeColor = "palevioletred";
-        this.nodeColor = "white";
+        this.strokeColor = "#DB7093";
+        this.nodeColor = "#FFFFFF";
         this.textStrokeWeight = 1;
         this.borderStrokeWeight = Node.nodeRadius / 5;
         this.textSize = this.radius / 1.5;
@@ -49,7 +49,6 @@ class Node{
         if(this.showMove){
             image(this.moveImage, this.x , this.y  - this.radius , this.radius, this.radius);
         }
-
     }
 
     update(){
@@ -68,6 +67,21 @@ class Node{
         }
         return false
     }
+
+    getStrokeColor(){
+        return this.strokeColor;
+    }
+    setStrokeColor(strokeColor){
+        this.strokeColor = strokeColor;
+    }
+
+    getNodeColor(){
+        return this.nodeColor;
+    }
+    setNodeColor(nodeColor){
+        this.nodeColor = nodeColor;
+    }
+    
 
 
     // draws each node
@@ -91,8 +105,9 @@ class Node{
         line(lastNode.x, lastNode.y, firstNode.x, firstNode.y);     
     }
 
+    
     static generateRandomNodesArray(nbr){
-        newNodes = [];
+        let newNodes = [];
         for(var i = 0; i < nbr; i ++){
             let randX =  random(0+ Node.nodeRadius, width - Node.nodeRadius);
             let randY = random(0 + Node.nodeRadius, height - Node.nodeRadius);
