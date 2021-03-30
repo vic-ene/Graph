@@ -67,54 +67,77 @@ function changeBackgroundColor(){
 
 
 function addNode(x ,y){
-    if(isActive(addNodeButton)){
-      nodes.push(new Node(x, y,  2 * Node.nodeRadius, nodes.length));
-      order.push(nodes.length - 1);
-      bestOrder = order.slice();
-    }
+  if(isActive(addNodeButton)){
+    nodes.push(new Node(x, y,  2 * Node.nodeRadius, nodes.length));
+    order.push(nodes.length - 1);
+    bestOrder = order.slice();
   }
-  
+}
 
 
-  function moveNode(index){
-    if(index == - 1) return;
-    if(isActive(moveNodeButton)){
-      nodes[index].move = true;
-    }
+
+function moveNode(index){
+  if(index == - 1) return;
+  if(isActive(moveNodeButton)){
+    nodes[index].move = true;
   }
+}
 
 
 
 
-  function deleteNode(index){
-    if(index == - 1) return;
-    if(isActive(deleteNodeButton)){
-      nodes.splice(index, 1);
-      order.splice(order.indexOf(index), 1);
-      nodeIndex = -1;
-      // reindex the rest
-      for(var i = index; i <  nodes.length; i ++ ){
-        nodes[i].id = i;
+function deleteNode(index){
+  if(index == - 1) return;
+  if(isActive(deleteNodeButton)){
+    nodes.splice(index, 1);
+    order.splice(order.indexOf(index), 1);
+    nodeIndex = -1;
+    // reindex the rest
+    for(var i = index; i <  nodes.length; i ++ ){
+      nodes[i].id = i;
+    }
+    for(var i = 0; i < order.length; i ++){
+      if(order[i] >= index){
+        order[i]-= 1;
       }
-      for(var i = 0; i < order.length; i ++){
-        if(order[i] >= index){
-          order[i]-= 1;
-        }
-      }
-      bestOrder = order.slice();
-    }
-  }
-  
-
-  function generateRandomNodes(){ 
-    nodes = Node.generateRandomNodesArray(defaultNumberOfNodes);
-    changeNodesColor(nodes, strokeColor, nodeColor);
-    order = [];
-    for(var i = 0; i <  defaultNumberOfNodes; i ++){
-      order.push(i);
     }
     bestOrder = order.slice();
   }
+}
+
+
+function generateRandomNodes(){ 
+  nodes = Node.generateRandomNodesArray(defaultNumberOfNodes);
+  changeNodesColor(nodes, strokeColor, nodeColor);
+  order = [];
+  for(var i = 0; i <  defaultNumberOfNodes; i ++){
+    order.push(i);
+  }
+  bestOrder = order.slice();
+}
+
+function saveInfo(){
+  localStorage.setItem('strokeColor', strokeColor);
+  localStorage.setItem('nodeColor', nodeColor);
+  localStorage.setItem('backgroundColor', backgroundColor);
+ 
+}
+
+
+function loadInfo(){
+    if(localStorage.getItem('strokeColor') !== null){
+      strokeColor = localStorage.getItem('strokeColor');
+      strokeColorInput.value = strokeColor;
+    }
+    if(localStorage.getItem('nodeColor') !== null){
+      nodeColor = localStorage.getItem('nodeColor');
+      nodeColorInput.value = nodeColor;
+    }
+    if(localStorage.getItem('backgroundColor') !== null){
+      backgroundColor = localStorage.getItem('backgroundColor');
+      backgroundColorInput.value = backgroundColor;
+    }
+}
 
 
 function resetNodes(){

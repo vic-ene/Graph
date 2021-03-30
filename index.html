@@ -44,6 +44,7 @@
       <button id="deleteNodeButton">Delete Node</button>
       <button id="generateNodesButton">Generate Nodes</button>
       <button id="deleteAllButton">Delete All</button> 
+      <button id="saveButton">Save</button>
     </div>
   </div>
  
@@ -61,12 +62,14 @@
       let height = canvasDiv.offsetHeight;
       var canvas;
 
-      var   deleteAllButton = document.querySelector('#deleteAllButton'),
-            deleteNodeButton = document.querySelector('#deleteNodeButton'),
+      var   addNodeButton = document.querySelector('#addNodeButton'),
             moveNodeButton = document.querySelector('#moveNodeButton'),
-            addNodeButton = document.querySelector('#addNodeButton'),
+            deleteNodeButton = document.querySelector('#deleteNodeButton'),
             generateNodesButton = document.querySelector('#generateNodesButton'),
-
+            deleteAllButton = document.querySelector('#deleteAllButton'),
+            saveButton = document.querySelector('#saveButton'),
+           
+           
             calculateButton = document.querySelector('#calculateButton'),
             speedSlider = document.querySelector('#speedSlider'), 
             speedSliderText = document.querySelector('#speedSliderText'),
@@ -75,8 +78,8 @@
             strokeColorInput = document.querySelector('#strokeColorInput');
             nodeColorInput = document.querySelector('#nodeColorInput');
             backgroundColorInput = document.querySelector('#backgroundColorInput');
-            
 
+           
 
       var buttons = [];
       buttons.push(deleteAllButton);
@@ -94,11 +97,14 @@
 
 
       // these methods are in nodesbuttons.js 
-      deleteAllButton.addEventListener('click', resetNodes)
-      generateNodesButton.addEventListener('click', generateRandomNodes)
       addNodeButton.addEventListener('click', switchButton);
       moveNodeButton.addEventListener('click', switchButton);
       deleteNodeButton.addEventListener('click', switchButton);
+      generateNodesButton.addEventListener('click', generateRandomNodes);
+      deleteAllButton.addEventListener('click', resetNodes);
+      saveButton.addEventListener('click', saveInfo);
+      
+     
 
       calculateButton.addEventListener('click', calculateDistanceMatrix);
       speedSlider.addEventListener('input', changeCalculationSpeed);
@@ -109,6 +115,11 @@
       nodeColorInput.addEventListener('input', changeNodeColor);
       backgroundColorInput.addEventListener('input', changeBackgroundColor);
 
+
+      document.addEventListener('DOMContentLoaded', loadInfo);
+
+
+      
     function windowResized(){
       width = canvasDiv.offsetWidth;
       height = canvasDiv.offsetHeight;
